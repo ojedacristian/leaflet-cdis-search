@@ -49,6 +49,7 @@ fetch(url)
                     ? ""
                     : '<a target="_blank" href="' + web + '">Conocé más</a>';
             let marker = L.marker([lat, lon],
+                {title: articulador + i}
                 // { icon: icons[cat] }
             )
                 .bindPopup(`
@@ -63,7 +64,6 @@ fetch(url)
         `
                 )
             // .addTo(eval(cat));
-            console.log(typeof marker)
             categories[cat].push(marker)
             // <img src='https://www.compraensanjuan.com/fotos_articulos/1595902_2.jpg' 
             //     style='max-width:300px'
@@ -74,45 +74,40 @@ fetch(url)
 
 const load = () => {
 
-    const CIC = L.featureGroup(categories.CIC)
-    const CDR = L.featureGroup(categories.CDR)
-    
+    const CIC = L.layerGroup(categories.CIC)
+    const CDR = L.layerGroup(categories.CDR)
+
     const mapa = L.tileLayer("https://gis.argentina.gob.ar/osm/{z}/{x}/{y}.png", {
         attribution:
             '&copy; Contribuidores <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
     const map = L.map("map", { layers: [mapa, CIC] }).setView([-40.44, -63.59], 4.5);
-    
+
     const baseMaps = {
         Mapa: mapa
     };
-
-    
-    
     const overlayMaps = {
-        //"Centros de Desarrollo Infantil": CDI,
-        //"Centros de Referencia": CDR,
         "CDR": CDR,
         "CIC": CIC
     };
-    
+    console.log('CIC' ,CIC)
     L.control
-      .layers(baseMaps, overlayMaps, 
-    //     {
-    //     collapsed: window.screen.width < 800 ? true : false,
-    //     hideSingleBase: true
-    //   }
-      )
-      .addTo(map);
-    
-    //   L.control.search({
-    //     layer: [CIC, CDR],
-    //     initial: false,
-    //     propertyName: 'name',
-    //     buildTip: function (text, val) {
-    //         var type = val.layer.feature.properties.amenity;
-    //         return '<a href="#" class="' + type + '">' + text + '<b>' + type + '</b></a>';
-    //     }
-    // })
-    //     .addTo(map);
+        .layers(baseMaps, overlayMaps, {
+            collapsed: window.screen.width < 800 ? true : false,
+            hideSingleBase: true
+        })
+        .addTo(map);
+
+        L.control.search({
+            layer: L.layerGroup([CIC, CDR]),
+            initial: false,
+            // propertyName: 'name',
+            // buildTip: function (text, val) {
+            //     var type = val.layer.feature.properties.amenity;
+            //     return '<a href="#" class="' + type + '">' + text + '<b>' + type + '</b></a>';
+            // }
+        })
+            .addTo(map);
+
+
 }
