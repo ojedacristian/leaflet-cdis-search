@@ -101,6 +101,7 @@ const load = () => {
         L.control.search({
             layer: L.layerGroup([CIC, CDR]),
             initial: false,
+            marker: L.circleMarker([0,0], {radius: 20})
             // propertyName: 'name',
             // buildTip: function (text, val) {
             //     var type = val.layer.feature.properties.amenity;
