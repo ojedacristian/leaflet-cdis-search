@@ -14,8 +14,8 @@ let categories = {
 const spreadsheetIDMDS = "1gBBlBkU2nMio5MV_qadALPZSRR-SSLQ6zWPNRNTj5ms";
 const spreadsheetIDSSPIN = "1YwWUH_qOs0ZS6lyOuMzIapvVNhZxe9sSXh66zkxIzTA";
 const query = encodeURIComponent(
-    // "Select * where N = 'CIC' OR N= 'CDI' OR N= 'CDR' OR N='CDIN' LIMIT 100"
-    "Select * where N = 'CDIN' LIMIT 100"
+    "Select * where N = 'CIC' OR N= 'CDI' OR N= 'CDR' OR N='CDIN' "
+    // "Select * where N = 'CDIN' LIMIT 100"
 );
 const url = `https://docs.google.com/spreadsheets/d/${spreadsheetIDSSPIN}/gviz/tq? ${'&tq=' + query}`
 
@@ -71,9 +71,10 @@ fetch(url)
     });
 
 const load = () => {
-
+    console.log(categories)
     const CIC = L.layerGroup(categories.CIC)
     const CDR = L.layerGroup(categories.CDR)
+    const CDI = L.layerGroup(categories.CDI)
     const CDIN = L.layerGroup(categories.CDIN)
 
     const mapa = L.tileLayer("https://gis.argentina.gob.ar/osm/{z}/{x}/{y}.png", {
@@ -87,6 +88,7 @@ const load = () => {
     const overlayMaps = {
         'CDR': CDR,
         'CIC': CIC,
+        'CDI': CDI,
         'CDIN': CDIN
     };
 
@@ -98,13 +100,13 @@ const load = () => {
         .addTo(map);
 
     L.control.search({
-        layer: L.layerGroup([CIC, CDR, CDIN]),
+        layer: L.layerGroup([CIC, CDR, CDI, CDIN]),
         initial: false,
         marker: L.circleMarker([0, 0], { radius: 20 }),
-        zoom: 10,
+        zoom: 14,
         buildTip: function (text, val) {
             const type = val.layer.options.cat;
-            return `<a href='#' class=${type}> <span>${text}</span> <b>${type}</b></a>`;
+            return `<a href='#' class=${type}> <button>${type}</button> <span>${text}</span> </a>`;
         }
     })
         .addTo(map);

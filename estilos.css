@@ -1,18 +1,27 @@
 #map {
     min-height: 80vh;
 }
-.search-tip b {
-	color: #fff;
+.search-tip a {
+    padding: 0.5em;
 }
-.leaflet-control-search .search-tip.CDIN {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-.CDIN.search-tip b {
-    background: #f66;
-    margin-right: 10px;
+.search-tip button {
+    color: #fff;
+    margin-right: 5px;
     padding: 2px;
+    width: 3em;
+    border: none;
+}
+.CDIN.search-tip button {
+    background: #f66;
+}
+.CDI.search-tip button {
+    background: rgb(49, 117, 218);
+}
+.CDR.search-tip button {
+    background: rgb(23, 132, 146);
+}
+.CIC.search-tip button {
+    background: rgb(179, 44, 44);
 }
 .search-tip {
 	white-space: nowrap;
