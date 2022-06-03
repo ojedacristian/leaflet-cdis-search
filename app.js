@@ -10,13 +10,12 @@ let categories = {
     MDC: [],
     CDIN: [],
 }
-// subGroups = [CDI, CDR, CIC, HUE, IM, MAY, ANP, MDC, CDIN,]
 
 const spreadsheetIDMDS = "1gBBlBkU2nMio5MV_qadALPZSRR-SSLQ6zWPNRNTj5ms";
 const spreadsheetIDSSPIN = "1YwWUH_qOs0ZS6lyOuMzIapvVNhZxe9sSXh66zkxIzTA";
 const query = encodeURIComponent(
-    // " Select * where N = 'CDIN' "  
-    "Select * where N = 'CIC' OR N= 'CDI' OR N= 'CDR' OR N='CDIN' LIMIT 100"
+    // "Select * where N = 'CIC' OR N= 'CDI' OR N= 'CDR' OR N='CDIN' LIMIT 100"
+    "Select * where N = 'CDIN' LIMIT 100"
 );
 const url = `https://docs.google.com/spreadsheets/d/${spreadsheetIDSSPIN}/gviz/tq? ${'&tq=' + query}`
 
@@ -49,7 +48,7 @@ fetch(url)
                     ? ""
                     : '<a target="_blank" href="' + web + '">Conocé más</a>';
             let marker = L.marker([lat, lon],
-                {title: articulador + i}
+                { title: articulador }
                 // { icon: icons[cat] }
             )
                 .bindPopup(`
@@ -63,11 +62,7 @@ fetch(url)
           <p><a target="_blank" href="https://www.argentina.gob.ar/desarrollosocial/sumainformacion">Sumá información</a></p>
         `
                 )
-            // .addTo(eval(cat));
             categories[cat].push(marker)
-            // <img src='https://www.compraensanjuan.com/fotos_articulos/1595902_2.jpg' 
-            //     style='max-width:300px'
-            //   />
         }
         load()
     });
@@ -76,21 +71,22 @@ const load = () => {
 
     const CIC = L.layerGroup(categories.CIC)
     const CDR = L.layerGroup(categories.CDR)
+    const CDIN = L.layerGroup(categories.CDIN)
 
     const mapa = L.tileLayer("https://gis.argentina.gob.ar/osm/{z}/{x}/{y}.png", {
         attribution:
             '&copy; Contribuidores <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
     const map = L.map("map", { layers: [mapa, CIC] }).setView([-40.44, -63.59], 4.5);
-
     const baseMaps = {
         Mapa: mapa
     };
     const overlayMaps = {
-        "CDR": CDR,
-        "CIC": CIC
+        'CDR': CDR,
+        'CIC': CIC,
+        'CDIN': CDIN
     };
-    console.log('CIC' ,CIC)
+
     L.control
         .layers(baseMaps, overlayMaps, {
             collapsed: window.screen.width < 800 ? true : false,
@@ -98,17 +94,10 @@ const load = () => {
         })
         .addTo(map);
 
-        L.control.search({
-            layer: L.layerGroup([CIC, CDR]),
-            initial: false,
-            marker: L.circleMarker([0,0], {radius: 20})
-            // propertyName: 'name',
-            // buildTip: function (text, val) {
-            //     var type = val.layer.feature.properties.amenity;
-            //     return '<a href="#" class="' + type + '">' + text + '<b>' + type + '</b></a>';
-            // }
-        })
-            .addTo(map);
-
-
+    L.control.search({
+        layer: L.layerGroup([CIC, CDR, CDIN]),
+        initial: false,
+        marker: L.circleMarker([0, 0], { radius: 20 })
+    })
+        .addTo(map);
 }
