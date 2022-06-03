@@ -48,7 +48,10 @@ fetch(url)
                     ? ""
                     : '<a target="_blank" href="' + web + '">Conocé más</a>';
             let marker = L.marker([lat, lon],
-                { title: articulador }
+                { 
+                    title: articulador,
+                    cat
+                }
                 // { icon: icons[cat] }
             )
                 .bindPopup(`
@@ -97,7 +100,12 @@ const load = () => {
     L.control.search({
         layer: L.layerGroup([CIC, CDR, CDIN]),
         initial: false,
-        marker: L.circleMarker([0, 0], { radius: 20 })
+        marker: L.circleMarker([0, 0], { radius: 20 }),
+        zoom: 10,
+        buildTip: function (text, val) {
+            const type = val.layer.options.cat;
+            return `<a href='#' class=${type}> <span>${text}</span> <b>${type}</b></a>`;
+        }
     })
         .addTo(map);
 }

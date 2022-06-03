@@ -1,3 +1,19 @@
 #map {
     min-height: 80vh;
 }
+.search-tip b {
+	color: #fff;
+}
+.leaflet-control-search .search-tip.CDIN {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.CDIN.search-tip b {
+    background: #f66;
+    margin-right: 10px;
+    padding: 2px;
+}
+.search-tip {
+	white-space: nowrap;
+}
