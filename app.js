@@ -1,3 +1,5 @@
+import { icons } from './components/icons.js'
+
 const mcgLayerSupportGroup = L.markerClusterGroup.layerSupport();
 let categories = {
     CDI: [],
@@ -50,9 +52,9 @@ fetch(url)
             let marker = L.marker([lat, lon],
                 { 
                     title: articulador,
-                    cat
-                }
-                // { icon: icons[cat] }
+                    icon: icons[cat],
+                    cat,
+                },
             )
                 .bindPopup(`
         <p>${categoria}</p> 
