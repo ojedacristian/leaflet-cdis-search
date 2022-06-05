@@ -1,4 +1,4 @@
-// const parentGroup = L.markerClusterGroup();
+const parentGroup = L.markerClusterGroup();
 let categories = {
     CDI: [],
     CDR: [],
@@ -76,12 +76,16 @@ const load = () => {
     const CDR = L.layerGroup(categories.CDR)
     const CDI = L.layerGroup(categories.CDI)
     const CDIN = L.layerGroup(categories.CDIN)
+    parentGroup.addLayer(CIC)
+    parentGroup.addLayer(CDR)
+    parentGroup.addLayer(CDI)
+    parentGroup.addLayer(CDIN)
 
     const mapa = L.tileLayer("https://gis.argentina.gob.ar/osm/{z}/{x}/{y}.png", {
         attribution:
             '&copy; Contribuidores <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
-    const map = L.map("map", { layers: [mapa, CIC] }).setView([-40.44, -63.59], 4.5);
+    const map = L.map("map", { layers: [mapa, parentGroup] }).setView([-40.44, -63.59], 4.5);
     const baseMaps = {
         Mapa: mapa
     };
@@ -100,10 +104,11 @@ const load = () => {
         .addTo(map);
 
     L.control.search({
-        layer: L.layerGroup([CIC, CDR, CDI, CDIN]),
+        // layer: L.layerGroup([CIC, CDR, CDI, CDIN]),
+        layer: parentGroup,
         initial: false,
-        marker: L.circleMarker([0, 0], { radius: 20 }),
-        zoom: 14,
+        // marker: L.circleMarker([0, 0], { radius: 20 }),
+        zoom: 16,
         buildTip: function (text, val) {
             const type = val.layer.options.cat;
             return `<a href='#' class=${type}> <button>${type}</button> <span>${text}</span> </a>`;
