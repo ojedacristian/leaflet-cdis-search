@@ -1,4 +1,5 @@
 import { icons } from './components/icons.js'
+import { loadControls } from './components/controls/controls.js'
 
 const mcgLayerSupportGroup = L.markerClusterGroup.layerSupport();
 let categories = {
@@ -50,7 +51,7 @@ fetch(url)
                     ? ""
                     : '<a target="_blank" href="' + web + '">Conocé más</a>';
             let marker = L.marker([lat, lon],
-                { 
+                {
                     title: articulador,
                     icon: icons[cat],
                     cat,
@@ -79,10 +80,10 @@ const load = () => {
     const CDI = L.layerGroup(categories.CDI)
     const CDIN = L.layerGroup(categories.CDIN)
 
-    
+
     const mapa = L.tileLayer("https://gis.argentina.gob.ar/osm/{z}/{x}/{y}.png", {
         attribution:
-        '&copy; Contribuidores <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            '&copy; Contribuidores <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
     const map = L.map("map", { layers: [mapa, mcgLayerSupportGroup] }).setView([-40.44, -63.59], 4.5);
     mcgLayerSupportGroup.addTo(map)
@@ -100,6 +101,12 @@ const load = () => {
         'CDI': CDI,
         'CDIN': CDIN
     };
+
+    loadControls([CIC,CDR,CDI,CDIN]) // MostrarOcultar Todos - Ampliar - Ubicacion
+    L.control.ubicacion({ position: "bottomright" }).addTo(map);
+    L.control.ampliar({ position: "bottomright" }).addTo(map);
+    L.control.mostrar({ position: "topright" }).addTo(map);
+
 
     L.control
         .layers(baseMaps, overlayMaps, {
