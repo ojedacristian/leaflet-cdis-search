@@ -1,4 +1,4 @@
-const parentGroup = L.markerClusterGroup();
+const mcgLayerSupportGroup = L.markerClusterGroup.layerSupport();
 let categories = {
     CDI: [],
     CDR: [],
@@ -76,16 +76,19 @@ const load = () => {
     const CDR = L.layerGroup(categories.CDR)
     const CDI = L.layerGroup(categories.CDI)
     const CDIN = L.layerGroup(categories.CDIN)
-    parentGroup.addLayer(CIC)
-    parentGroup.addLayer(CDR)
-    parentGroup.addLayer(CDI)
-    parentGroup.addLayer(CDIN)
 
+    
     const mapa = L.tileLayer("https://gis.argentina.gob.ar/osm/{z}/{x}/{y}.png", {
         attribution:
-            '&copy; Contribuidores <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        '&copy; Contribuidores <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
-    const map = L.map("map", { layers: [mapa, parentGroup] }).setView([-40.44, -63.59], 4.5);
+    const map = L.map("map", { layers: [mapa, mcgLayerSupportGroup] }).setView([-40.44, -63.59], 4.5);
+    mcgLayerSupportGroup.addTo(map)
+    mcgLayerSupportGroup.checkIn(CIC)
+    mcgLayerSupportGroup.checkIn(CDR)
+    mcgLayerSupportGroup.checkIn(CDI)
+    mcgLayerSupportGroup.checkIn(CDIN)
+
     const baseMaps = {
         Mapa: mapa
     };
@@ -105,7 +108,7 @@ const load = () => {
 
     L.control.search({
         // layer: L.layerGroup([CIC, CDR, CDI, CDIN]),
-        layer: parentGroup,
+        layer: mcgLayerSupportGroup,
         initial: false,
         // marker: L.circleMarker([0, 0], { radius: 20 }),
         zoom: 16,
