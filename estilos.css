@@ -1,5 +1,5 @@
 #map {
-    min-height: 80vh;
+    min-height: 100vh;
 }
 .search-tip a {
     padding: 0.5em;
@@ -26,3 +26,10 @@
 .search-tip {
 	white-space: nowrap;
 }
+.todosdiv {
+    padding: 4px 4px 4px 4px;
+    color: #333;
+    background: #ffffff;
+    width: 90%;
+    border: 2px solid rgba(200, 200, 200, 1);
+  }
