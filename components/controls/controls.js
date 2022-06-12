@@ -43,7 +43,13 @@ export const loadControls = (subGroups)=> {
               function (position) {
                 browserLat = position.coords.latitude;
                 browserLong = position.coords.longitude;
-                let marker_actual = L.marker([browserLat, browserLong]).addTo(map);
+                let marker_actual = L.marker([browserLat, browserLong], {
+                  icon: L.divIcon({
+                    className: 'here',
+                    iconSize: L.point(16, 16),
+                    html: 'V'
+                  })
+                }).addTo(map);
                 marker_actual.bindPopup("<b>Usted está aquí<b>").openPopup();
                 map.setView([browserLat, browserLong], 16);
               },

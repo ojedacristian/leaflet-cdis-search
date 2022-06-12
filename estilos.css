@@ -11,6 +11,10 @@
     width: 3em;
     border: none;
 }
+.here.search-tip b,
+.here.leaflet-marker-icon {
+	background: #f66
+}
 .CDIN.search-tip button {
     background: #f66;
 }

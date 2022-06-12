@@ -85,6 +85,15 @@ const load = () => {
         attribution:
             '&copy; Contribuidores <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
+
+    // const mapboxUrl = "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiY3Jpc3RpYW5vamVkYSIsImEiOiJjazVzNWRnczcwa2c0M2ttcXpzNzl6aGV1In0.weNfOTYnFN4OOCj0pye69g";
+
+    // const satellite = L.tileLayer(mapboxUrl, {
+    //     id: "cristianojeda/ck5wlrbjg042x1in6xgq6dop9",
+    //     tileSize: 512,
+    //     zoomOffset: -1
+    //   });
+
     const map = L.map("map", { layers: [mapa, mcgLayerSupportGroup] }).setView([-40.44, -63.59], 4.5);
     mcgLayerSupportGroup.addTo(map)
     mcgLayerSupportGroup.checkIn(CIC)
@@ -93,7 +102,8 @@ const load = () => {
     mcgLayerSupportGroup.checkIn(CDIN)
 
     const baseMaps = {
-        Mapa: mapa
+        Mapa: mapa,
+        // Satellite: satellite
     };
     const overlayMaps = {
         'CDR': CDR,
