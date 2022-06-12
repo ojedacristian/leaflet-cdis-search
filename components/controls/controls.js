@@ -47,7 +47,7 @@ export const loadControls = (subGroups)=> {
                   icon: L.divIcon({
                     className: 'here',
                     iconSize: L.point(16, 16),
-                    html: 'V'
+                    html: '👇'
                   })
                 }).addTo(map);
                 marker_actual.bindPopup("<b>Usted está aquí<b>").openPopup();
