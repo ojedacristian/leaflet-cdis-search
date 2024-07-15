@@ -106,16 +106,16 @@ const load = () => {
         // Satellite: satellite
     };
     const overlayMaps = {
-        'CDR': CDR,
-        'CIC': CIC,
+    //    'CDR': CDR,
+    //    'CIC': CIC,
         'CDI': CDI,
-        'CDIN': CDIN
+    //    'CDIN': CDIN
     };
 
     loadControls([CIC,CDR,CDI,CDIN]) // MostrarOcultar Todos - Ampliar - Ubicacion
     L.control.ubicacion({ position: "bottomright" }).addTo(map);
     L.control.ampliar({ position: "bottomright" }).addTo(map);
-    L.control.mostrar({ position: "topright" }).addTo(map);
+    //L.control.mostrar({ position: "topright" }).addTo(map);
 
 
     L.control
@@ -125,7 +125,7 @@ const load = () => {
         })
         .addTo(map);
 
-    L.control.search({
+/*    L.control.search({
         // layer: L.layerGroup([CIC, CDR, CDI, CDIN]),
         layer: mcgLayerSupportGroup,
         initial: false,
@@ -136,5 +136,5 @@ const load = () => {
             return `<a href='#' class=${type}> <button>${type}</button> <span>${text}</span> </a>`;
         }
     })
-        .addTo(map);
+        .addTo(map);*/
 }

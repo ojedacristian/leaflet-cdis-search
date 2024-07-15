@@ -25,10 +25,10 @@ L.icon = function (options) {
 };
 
 export const icons = {
-    CDIOK: redIcon,
-    CDI: redIcon,
+    CDIOK: blueIcon,
+    CDI: blueIcon,
     CDIN: greyIcon,
-    CDR: blueIcon,
+    CDR: redIcon,
     CIC: orangeIcon,
     HUE: greenIcon,
     IM: goldIcon,
