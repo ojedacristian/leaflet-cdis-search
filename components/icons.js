@@ -34,5 +34,8 @@ export const icons = {
     IM: goldIcon,
     MAY: greyIcon,
     ANP: violetIcon,
+    INF: blueIcon,
+    SDP: violetIcon,
+    PRI: orangeIcon,
     MDC: yellowIcon
 };
