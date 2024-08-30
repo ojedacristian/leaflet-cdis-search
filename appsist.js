@@ -8,14 +8,15 @@ let categories = {
     PRI: [],
 }
 
-//const spreadsheetIDMDS = "1gBBlBkU2nMio5MV_qadALPZSRR-SSLQ6zWPNRNTj5ms";
-//const spreadsheetIDSSPIN = "1YwWUH_qOs0ZS6lyOuMzIapvVNhZxe9sSXh66zkxIzTA";
-const spreadsheetIDTerritoriales = '1HEzJEHa0oBuL2jukH74PHtX0VtgzDrrBTZvungFrivs'
-const query = encodeURIComponent(
-    "Select * where N = 'CIC' OR N= 'CDI' OR N= 'CDR' OR N='CDIN' OR N='SDP' "
-    // "Select * where N = 'CDIN' LIMIT 100"
-);
-const url = `https://docs.google.com/spreadsheets/d/${spreadsheetIDTerritoriales}/pub?output=csv`
+const idspr = '1HEzJEHa0oBuL2jukH74PHtX0VtgzDrrBTZvungFrivs'
+
+const url = `https://docs.google.com/spreadsheets/d/${idspr}/pub?output=csv`
+
+const codeName = {
+    SDP: "Sistemas de protección",
+    PRI: "Primeros años",
+    INF: "Primera Infancia"
+} 
 
 // Buscamos los datos Json de Google
 fetch(url)
@@ -28,7 +29,6 @@ fetch(url)
                 const [cat, nombre, region, provincia, localidad, espacio, direccion, profesion, latitud, longitud] = row.split(",");
                 return { cat, nombre, region, provincia, localidad, espacio, direccion, profesion, latitud, longitud}
             })
-        console.log(items);
         let i;
         for (i = 0; i < items.length; i++) {
             // console.log("Latitud", entry[i].c[9]?.v || "null");
@@ -38,7 +38,10 @@ fetch(url)
             //let provincia = entry[i]["gsx$provincia"]["$t"];
             //let localidad = entry[i]["gsx$localidad"]["$t"];
             let nombre = items[i].nombre
-            let profesion = items[i].profesion
+            //let profesion = items[i].profesion
+            let region = items[i].region
+            let localidad = items[i].localidad
+            let espacio = items[i].espacio
 
             let cat = items[i].cat || "";
 
@@ -51,8 +54,11 @@ fetch(url)
             )
                 .bindPopup(`
           <h4>${nombre}</h4> 
-          <h4>${profesion}</h4>
-          <p> ${cat}</p> 
+          <p>${codeName[cat]} - Región ${region}</p>
+          <h4>${localidad} - ${espacio}</h4>
+          <small>
+            <a href="http://www.google.com/maps/place/${lat},${lon}" target='_blank'>Ver en Google Maps</a>
+          </small>
         `
                 )
             categories[cat].push(marker)
@@ -86,20 +92,15 @@ const load = () => {
     mcgLayerSupportGroup.checkIn(INF)
     mcgLayerSupportGroup.checkIn(SDP)
     mcgLayerSupportGroup.checkIn(PRI)
-    // mcgLayerSupportGroup.checkIn(CDR)
-    // mcgLayerSupportGroup.checkIn(CDI)
-    // mcgLayerSupportGroup.checkIn(CDIN)
 
     const baseMaps = {
         Mapa: mapa,
         // Satellite: satellite
     };
     const overlayMaps = {
-    //    'CDR': CDR,
         'Primera Infancia': INF,
         'Sistemas de protección': SDP,
         'Primeros años': PRI,
-    //    'CDIN': CDIN
     };
 
     loadControls([SDP, PRI, INF]) // MostrarOcultar Todos - Ampliar - Ubicacion
